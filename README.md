@@ -1,6 +1,6 @@
 <!-- Insira o GIF logo no início abaixo do título principal -->
 <p align="center">
-  <img src="./assets/delivery.gif" alt="Demonstração do Sistema" width="600px">
+  <img src=".projeto-cadastro-delivery-glitter.gif" alt="Demonstração do Sistema" width="600px">
 </p>
 
 Projeto desenvolvido como culminância do segundo bimestre da disciplina de **Linguagem de Programação Orientada a Objetos (POO)**. O sistema consiste em uma aplicação desktop em Java para o gerenciamento de cadastros de um serviço de delivery, contando com interface gráfica interativa e persistência de dados estruturada em arquivos CSV.

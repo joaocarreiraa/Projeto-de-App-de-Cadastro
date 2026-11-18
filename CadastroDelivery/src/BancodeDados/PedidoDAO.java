@@ -1,6 +1,6 @@
 package BancodeDados;
 //Orientação de Objetos para Persistência de Dados em CSV
-//Parte feita por João Paulo de Oliveira Araújo
+//Parte feita por João Paulo de Oliveira Araujo
 
 import Cadastro.Pedido;
 

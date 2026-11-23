@@ -1,5 +1,5 @@
 package Usuário;
-// Parte feita por Joao Lucas Carreira
+// Parte feita por Joao Lucas Carreira e João Paulo Araújo
 import BancodeDados.PedidoDAO;
 import Cadastro.Pedido;
 

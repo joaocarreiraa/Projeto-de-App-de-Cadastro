@@ -8,6 +8,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.awt.Color;
+import java.awt.Font;
 
 public class TelaDelivery extends JFrame implements ActionListener {
 	// Componentes visuais
@@ -15,79 +17,124 @@ public class TelaDelivery extends JFrame implements ActionListener {
     private JButton btnCadastrar, btnListar, btnPesquisar;
     private JTable tabelaPedido;
     private DefaultTableModel modeloTabela;
+    private JLabel logo;
     
     // Lista em memória
     private ArrayList<Pedido> listaPedidos;
 
     public TelaDelivery() {
-        // Configurações da Janela Principal (Top-level container)
+    	//fontes usadas no programa
+    	Font fonteLabel = new Font("Segoe UI", Font.BOLD, 13);
+        Font fonteCampo = new Font("Segoe UI", Font.PLAIN, 13);
+        Font fonteBotao = new Font("Segoe UI", Font.BOLD, 12);
+        
+        // configurações da janela principal (top-level container)
         setTitle("Sistema de Cadastro de Comida - Delivery");
-        setSize(600, 500);
+        setSize(600, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(null);
+        getContentPane().setBackground(new Color(255,182,193));
 
-        // Carrega os dados salvos do CSV automaticamente ao iniciar
+        // carrega os dados salvos do CSV automaticamente ao iniciar
         listaPedidos = PedidoDAO.carregarArquivo();
 
-        // Rótulos e Campos de Texto
+        // rótulos e campos de texto
+        // mudar +70 px no y pra encaixar a header
         JLabel lblCodigo = new JLabel("Código:");
-        lblCodigo.setBounds(20, 20, 80, 25);
+        lblCodigo.setBounds(20, 90, 80, 25);
+        lblCodigo.setFont(fonteLabel);
+        lblCodigo.setForeground(new Color(199,21,133));
         add(lblCodigo);
+        
 
         txtCodigo = new JTextField();
-        txtCodigo.setBounds(100, 20, 150, 25);
+        txtCodigo.setBounds(100, 90, 150, 25);
+        txtCodigo.setFont(fonteCampo);
         add(txtCodigo);
 
         JLabel lblNome = new JLabel("Nome:");
-        lblNome.setBounds(20, 60, 80, 25);
+        lblNome.setBounds(20, 120, 80, 25);
+        lblNome.setFont(fonteLabel);
+        lblNome.setForeground(new Color(199,21,133));
         add(lblNome);
 
         txtNome = new JTextField();
-        txtNome.setBounds(100, 60, 250, 25);
+        txtNome.setBounds(100, 120, 250, 25);
+        txtNome.setFont(fonteCampo);
         add(txtNome);
 
         JLabel lblCategoria = new JLabel("Categoria:");
-        lblCategoria.setBounds(20, 100, 80, 25);
+        lblCategoria.setBounds(20, 150, 80, 25);
+        lblCategoria.setFont(fonteLabel);
+        lblCategoria.setForeground(new Color(199,21,133));
         add(lblCategoria);
 
         txtCategoria = new JTextField();
-        txtCategoria.setBounds(100, 100, 200, 25);
+        txtCategoria.setBounds(100, 150, 200, 25);
+        txtCategoria.setFont(fonteCampo);
         add(txtCategoria);
 
         JLabel lblPreco = new JLabel("Preço (R$):");
-        lblPreco.setBounds(20, 140, 80, 25);
+        lblPreco.setBounds(20, 190, 80, 25);
+        lblPreco.setFont(fonteLabel);
+        lblPreco.setForeground(new Color(199,21,133));
         add(lblPreco);
 
         txtPreco = new JTextField();
-        txtPreco.setBounds(100, 140, 150, 25);
+        txtPreco.setBounds(100, 190, 150, 25);
+        txtPreco.setFont(fonteCampo);
         add(txtPreco);
 
         // Botões do CRUD
         btnCadastrar = new JButton("Cadastrar");
-        btnCadastrar.setBounds(380, 20, 150, 30);
+        btnCadastrar.setBounds(380, 90, 150, 30);
+        btnCadastrar.setFont(fonteBotao);
+        btnCadastrar.setBackground(new Color (255,182,193));
+        btnCadastrar.setForeground(new Color (199,21,133));
+        btnCadastrar.setFocusPainted(false);
         btnCadastrar.addActionListener(this);
         add(btnCadastrar);
 
         btnListar = new JButton("Listar Todos");
-        btnListar.setBounds(380, 65, 150, 30);
+        btnListar.setBounds(380, 135, 150, 30);
+        btnListar.setFont(fonteBotao);
+        btnListar.setBackground(new Color (255,182,193)); 
+        btnListar.setForeground(new Color (199,21,133));
+        btnListar.setFocusPainted(false);
         btnListar.addActionListener(this);
         add(btnListar);
 
         btnPesquisar = new JButton("Pesquisar Nome");
-        btnPesquisar.setBounds(380, 110, 150, 30);
+        btnPesquisar.setBounds(380, 180, 150, 30);
+        btnPesquisar.setFont(fonteBotao);
+        btnPesquisar.setBackground(new Color (255,182,193)); 
+        btnPesquisar.setForeground(new Color (199,21,133));
+        btnPesquisar.setFocusPainted(false);
         btnPesquisar.addActionListener(this);
         add(btnPesquisar);
+        
+       
 
-        // Tabela para exibição organizada
+        // tabela para exibição organizada
         modeloTabela = new DefaultTableModel(new Object[]{"Código", "Nome", "Categoria", "Preço"}, 0);
         tabelaPedido = new JTable(modeloTabela);
+        tabelaPedido.setFont(fonteCampo);
+        tabelaPedido.setBackground(new Color (255,182,193)); 
+        tabelaPedido.setRowHeight(24);
+        tabelaPedido.getTableHeader().setFont(fonteLabel);
         JScrollPane painelRolagem = new JScrollPane(tabelaPedido);
-        painelRolagem.setBounds(20, 190, 540, 250);
+        painelRolagem.setBounds(20, 230, 540, 250);
         add(painelRolagem);
 
-        // Atualiza a tabela com os dados que foram lidos do arquivo ao abrir
+        // atualiza a tabela com os dados que foram lidos do arquivo ao abrir
         atualizarTabela(listaPedidos);
+        
+        //imagem que fica na header
+        ImageIcon iconeGif = new ImageIcon(getClass().getResource("/logo.gif"));
+        logo = new JLabel(iconeGif);
+        logo.setBounds(16, 8, 580, 80);
+        add(logo);
     }
 
     // Tratamento de Eventos dos Botões (ActionListeners)

@@ -28,13 +28,18 @@ public class TelaDelivery extends JFrame implements ActionListener {
         Font fonteCampo = new Font("Segoe UI", Font.PLAIN, 13);
         Font fonteBotao = new Font("Segoe UI", Font.BOLD, 12);
         
+        //cores usadas no programa (paleta laranja)
+        Color corFundo = new Color(255, 243, 224);   // creme
+        Color corBotao = new Color(255, 204, 128);   // laranja claro
+        Color corTexto = new Color(191, 54, 12);     // laranja escuro
+        
         // configurações da janela principal (top-level container)
         setTitle("Sistema de Cadastro de Comida - Delivery");
         setSize(600, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(null);
-        getContentPane().setBackground(new Color(255,182,193));
+        getContentPane().setBackground(corFundo);
 
         // carrega os dados salvos do CSV automaticamente ao iniciar
         listaPedidos = PedidoDAO.carregarArquivo();
@@ -44,7 +49,7 @@ public class TelaDelivery extends JFrame implements ActionListener {
         JLabel lblCodigo = new JLabel("Código:");
         lblCodigo.setBounds(20, 90, 80, 25);
         lblCodigo.setFont(fonteLabel);
-        lblCodigo.setForeground(new Color(199,21,133));
+        lblCodigo.setForeground(corTexto);
         add(lblCodigo);
         
 
@@ -56,7 +61,7 @@ public class TelaDelivery extends JFrame implements ActionListener {
         JLabel lblNome = new JLabel("Nome:");
         lblNome.setBounds(20, 120, 80, 25);
         lblNome.setFont(fonteLabel);
-        lblNome.setForeground(new Color(199,21,133));
+        lblNome.setForeground(corTexto);
         add(lblNome);
 
         txtNome = new JTextField();
@@ -67,7 +72,7 @@ public class TelaDelivery extends JFrame implements ActionListener {
         JLabel lblCategoria = new JLabel("Categoria:");
         lblCategoria.setBounds(20, 150, 80, 25);
         lblCategoria.setFont(fonteLabel);
-        lblCategoria.setForeground(new Color(199,21,133));
+        lblCategoria.setForeground(corTexto);
         add(lblCategoria);
 
         txtCategoria = new JTextField();
@@ -78,7 +83,7 @@ public class TelaDelivery extends JFrame implements ActionListener {
         JLabel lblPreco = new JLabel("Preço (R$):");
         lblPreco.setBounds(20, 190, 80, 25);
         lblPreco.setFont(fonteLabel);
-        lblPreco.setForeground(new Color(199,21,133));
+        lblPreco.setForeground(corTexto);
         add(lblPreco);
 
         txtPreco = new JTextField();
@@ -86,12 +91,12 @@ public class TelaDelivery extends JFrame implements ActionListener {
         txtPreco.setFont(fonteCampo);
         add(txtPreco);
 
-        // Botões do CRUD
+        // botões do CRUD
         btnCadastrar = new JButton("Cadastrar");
         btnCadastrar.setBounds(380, 90, 150, 30);
         btnCadastrar.setFont(fonteBotao);
-        btnCadastrar.setBackground(new Color (255,182,193));
-        btnCadastrar.setForeground(new Color (199,21,133));
+        btnCadastrar.setBackground(corBotao);
+        btnCadastrar.setForeground(corTexto);
         btnCadastrar.setFocusPainted(false);
         btnCadastrar.addActionListener(this);
         add(btnCadastrar);
@@ -99,8 +104,8 @@ public class TelaDelivery extends JFrame implements ActionListener {
         btnListar = new JButton("Listar Todos");
         btnListar.setBounds(380, 135, 150, 30);
         btnListar.setFont(fonteBotao);
-        btnListar.setBackground(new Color (255,182,193)); 
-        btnListar.setForeground(new Color (199,21,133));
+        btnListar.setBackground(corBotao); 
+        btnListar.setForeground(corTexto);
         btnListar.setFocusPainted(false);
         btnListar.addActionListener(this);
         add(btnListar);
@@ -108,8 +113,8 @@ public class TelaDelivery extends JFrame implements ActionListener {
         btnPesquisar = new JButton("Pesquisar Nome");
         btnPesquisar.setBounds(380, 180, 150, 30);
         btnPesquisar.setFont(fonteBotao);
-        btnPesquisar.setBackground(new Color (255,182,193)); 
-        btnPesquisar.setForeground(new Color (199,21,133));
+        btnPesquisar.setBackground(corBotao); 
+        btnPesquisar.setForeground(corTexto);
         btnPesquisar.setFocusPainted(false);
         btnPesquisar.addActionListener(this);
         add(btnPesquisar);
@@ -120,9 +125,13 @@ public class TelaDelivery extends JFrame implements ActionListener {
         modeloTabela = new DefaultTableModel(new Object[]{"Código", "Nome", "Categoria", "Preço"}, 0);
         tabelaPedido = new JTable(modeloTabela);
         tabelaPedido.setFont(fonteCampo);
-        tabelaPedido.setBackground(new Color (255,182,193)); 
+        tabelaPedido.setBackground(corFundo); 
         tabelaPedido.setRowHeight(24);
+        tabelaPedido.setSelectionBackground(corBotao);
+        tabelaPedido.setSelectionForeground(corTexto);
         tabelaPedido.getTableHeader().setFont(fonteLabel);
+        tabelaPedido.getTableHeader().setBackground(corBotao);
+        tabelaPedido.getTableHeader().setForeground(corTexto);
         JScrollPane painelRolagem = new JScrollPane(tabelaPedido);
         painelRolagem.setBounds(20, 230, 540, 250);
         add(painelRolagem);
@@ -131,8 +140,8 @@ public class TelaDelivery extends JFrame implements ActionListener {
         atualizarTabela(listaPedidos);
         
         //imagem que fica na header
-        ImageIcon iconeGif = new ImageIcon(getClass().getResource("/logo.gif"));
-        logo = new JLabel(iconeGif);
+        ImageIcon iconeLogo = new ImageIcon(getClass().getResource("/logo_delivery.png"));
+        logo = new JLabel(iconeLogo);
         logo.setBounds(16, 8, 580, 80);
         add(logo);
     }
@@ -155,7 +164,7 @@ public class TelaDelivery extends JFrame implements ActionListener {
             String nome = txtNome.getText();
             String categoria = txtCategoria.getText();
             
-            // Tratamento de exceção de conversão numérica (NumberFormatException)[cite: 3]
+            // Tratamento de exceção de conversão numérica (NumberFormatException)
             double preco = Double.parseDouble(txtPreco.getText());
 
             if (codigo.isEmpty() || nome.isEmpty() || categoria.isEmpty()) {
